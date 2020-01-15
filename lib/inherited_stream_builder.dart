@@ -1,30 +1,24 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-import 'stream_service.dart';
+import 'event_bus.dart';
 
-class InheritedStreamBuilder<Service extends StreamService<StreamEvent>,
-    StreamEvent> extends InheritedWidget {
-  static T of<T extends InheritedWidget>(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<T>();
-  }
-
-  final Service service;
-  final AsyncWidgetBuilder<StreamEvent> builder;
+class InheritedStreamBuilder<B extends EventBus<StreamEvent>, StreamEvent>
+    extends InheritedWidget {
+  @override
+  bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
   InheritedStreamBuilder({
-    @required this.service,
+    @required this.eventBus,
     @required this.builder,
     StreamEvent initialData,
-  })  : assert(service != null),
-        super(
+  }) : super(
           child: StreamBuilder<StreamEvent>(
             initialData: initialData,
-            stream: service.stream,
+            stream: eventBus.stream,
             builder: builder,
           ),
         );
 
-  @override
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => true;
+  final B eventBus;
+  final AsyncWidgetBuilder<StreamEvent> builder;
 }

@@ -6,11 +6,11 @@ import 'package:stomp/stomp.dart';
 import 'package:uuid/uuid.dart';
 import 'package:websocket/websocket.dart';
 
-import 'stream_service.dart';
+import 'event_bus.dart';
 import 'stream_stomp_connector.dart';
 
-class StompStreamService extends StreamService<String> {
-  StompStreamService({this.url, this.destination, this.login, this.passcode}) {
+class StompEventBus extends EventBus<String> {
+  StompEventBus({this.url, this.destination, this.login, this.passcode}) {
     assert(url != null);
     assert(destination != null);
   }
@@ -54,7 +54,7 @@ class StompStreamService extends StreamService<String> {
     _stompClient.subscribeString(
       Uuid().v4(),
       destination,
-      (Map<String, String> headers, String message) => onMessage(message),
+      (Map<String, String> headers, String message) => onEvent(message),
     );
   }
 }
