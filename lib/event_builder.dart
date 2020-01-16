@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter20191210/stomp_event_bus.dart';
 
 import 'event_bus.dart';
 import 'inherited_stream_builder.dart';
+import 'stomp_event_bus.dart';
 
 class EventBuilder extends InheritedStreamBuilder<EventBus<String>, String> {
   static T of<T extends EventBuilder>(BuildContext context) =>
